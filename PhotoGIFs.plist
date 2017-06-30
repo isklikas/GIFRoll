@@ -1,1 +1,8 @@
-{ Filter = { Bundles = ( "com.apple.mobileslideshow" ); }; }
+{
+	Filter = {
+		Classes = (
+			"PUImageTileViewController",
+			"PLPhotoTileViewController",
+		);
+	};
+}

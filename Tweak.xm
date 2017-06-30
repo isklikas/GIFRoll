@@ -23,6 +23,14 @@
 
 @end
 
+@interface PLPhotoTileViewController : NSObject {}
+
+- (id)image;
+- (PHASset *)photo;
+-(void)setFullSizeImage:(id)arg1 ;
+
+@end
+
 %hook PUImageTileViewController
 
 - (id) image {
@@ -36,6 +44,29 @@
 	else {
 		return %orig;
 	}
+}
+
+%end
+
+%hook PLPhotoTileViewController
+
+- (id) image {
+	PHASset *imageAsset = [self photo];
+	NSString *typeID = imageAsset.uniformTypeIdentifier;
+	if ([typeID isEqualToString:@"com.compuserve.gif"]) {
+		NSURL *fURL = [imageAsset mainFileURL];
+		UIImage* mygif = [UIImage animatedImageWithAnimatedGIFURL:fURL];
+		return mygif;
+	}
+	else {
+		return %orig;
+	}
+}
+
+
+-(void)setFullSizeImage:(id)arg1 {
+	UIImage *img = [self image];
+	%orig(img);
 }
 
 %end
