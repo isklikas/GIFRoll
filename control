@@ -1,0 +1,9 @@
+Package: com.isklikas.photogifs
+Name: PhotoGIFs
+Depends: mobilesubstrate
+Version: 0.0.1
+Architecture: iphoneos-arm
+Description: An awesome MobileSubstrate tweak!
+Maintainer: isklikas
+Author: isklikas
+Section: Tweaks
