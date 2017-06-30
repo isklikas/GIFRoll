@@ -5,10 +5,22 @@
 	<key>items</key>
 	<array>
 		<dict>
+			<key>height</key>
+			<integer>100</integer>
+			<key>image</key>
+			<string>/Library/PreferenceBundles/PhotoGifsPrefs.bundle/GIFRoll-Header.png</string>
+			<key>background</key>
+			<string>#EFEFF4</string>
+			<key>cell</key>
+			<string>PSStaticTextCell</string>
+			<key>cellClass</key>
+			<string>PFHeaderCell</string>
+		</dict>
+		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>About GIFRoll</string>
+			<string></string>
 		</dict>
 		<dict>
 			<key>icon</key>

@@ -1,9 +1,9 @@
 Package: com.isklikas.photogifs
-Name: PhotoGIFs
+Name: GIFRoll
 Depends: mobilesubstrate
-Version: 0.0.1
+Version: 1.0.0
 Architecture: iphoneos-arm
-Description: An awesome MobileSubstrate tweak!
+Description: View your camera roll GIFs with their animation in the stock Photos app and the stock photo picker!
 Maintainer: isklikas
 Author: isklikas
 Section: Tweaks

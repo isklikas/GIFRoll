@@ -1,7 +1,7 @@
 include $(THEOS)/makefiles/common.mk
 
 BUNDLE_NAME = PhotoGifsPrefs
-PhotoGifsPrefs_FILES = SETRootListController.m
+PhotoGifsPrefs_FILES = SETRootListController.m PFHeaderCell.mm
 PhotoGifsPrefs_INSTALL_PATH = /Library/PreferenceBundles
 PhotoGifsPrefs_FRAMEWORKS = UIKit
 PhotoGifsPrefs_PRIVATE_FRAMEWORKS = Preferences

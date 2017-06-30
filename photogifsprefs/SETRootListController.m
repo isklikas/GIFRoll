@@ -18,7 +18,10 @@
 }
 
 -(void)source {
-    system("killall -9 Springboard");
+    NSURL *url = [NSURL URLWithString:@"https://github.com/isklikas/GIFRoll"];
+    if (![[UIApplication sharedApplication] openURL:url]) {
+        NSLog(@"%@%@",@"Failed to open url:",[url description]);
+    }
 }
 
 -(void)donate {
