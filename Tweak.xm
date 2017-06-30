@@ -35,15 +35,15 @@
 
 - (id) image {
 	PHASset *imageAsset = [self asset];
-	NSString *typeID = imageAsset.uniformTypeIdentifier;
-	if ([typeID isEqualToString:@"com.compuserve.gif"]) {
-		NSURL *fURL = [imageAsset mainFileURL];
-		UIImage* mygif = [UIImage animatedImageWithAnimatedGIFURL:fURL];
-		return mygif;
+	if ([imageAsset respondsToSelector:@selector(uniformTypeIdentifier)]) {
+		NSString *typeID = imageAsset.uniformTypeIdentifier;
+		if ([typeID isEqualToString:@"com.compuserve.gif"]) {
+			NSURL *fURL = [imageAsset mainFileURL];
+			UIImage* mygif = [UIImage animatedImageWithAnimatedGIFURL:fURL];
+			return mygif;
+		}
 	}
-	else {
-		return %orig;
-	}
+	return %orig;
 }
 
 %end
@@ -52,15 +52,15 @@
 
 - (id) image {
 	PHASset *imageAsset = [self photo];
-	NSString *typeID = imageAsset.uniformTypeIdentifier;
-	if ([typeID isEqualToString:@"com.compuserve.gif"]) {
-		NSURL *fURL = [imageAsset mainFileURL];
-		UIImage* mygif = [UIImage animatedImageWithAnimatedGIFURL:fURL];
-		return mygif;
+	if ([imageAsset respondsToSelector:@selector(uniformTypeIdentifier)]) {
+		NSString *typeID = imageAsset.uniformTypeIdentifier;
+		if ([typeID isEqualToString:@"com.compuserve.gif"]) {
+			NSURL *fURL = [imageAsset mainFileURL];
+			UIImage* mygif = [UIImage animatedImageWithAnimatedGIFURL:fURL];
+			return mygif;
+		}
 	}
-	else {
-		return %orig;
-	}
+	return %orig;
 }
 
 
