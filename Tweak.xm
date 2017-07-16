@@ -1,7 +1,7 @@
 #import <UIKit/UIKit.h>
 #import "UIImage+animatedGIF.h"
 
-@interface PHASset: NSObject{}
+@interface PHASset: NSObject {}
 
 @property (nonatomic, readonly) NSURL *ALAssetURL;
 @property (nonatomic, readonly) NSString *uniformTypeIdentifier;
@@ -18,8 +18,20 @@
 
 @interface PUImageTileViewController : NSObject {}
 
+@property id layoutInfo;
+@property (nonatomic, readonly) UIImageView *_imageView;
+
 - (id)image;
+- (void)setImage:(id)arg1;
 - (PHASset *)asset;
+- (void)_setNeedsUpdate;
+- (void)_setNeedsUpdateImage:(BOOL)arg1;
+- (void)_setNeedsUpdateImageView:(BOOL)arg1;
+- (void)_updateIfNeeded;
+- (void)_updateImageIfNeeded;
+- (void)_updateImageViewIfNeeded;
+- (void)_invalidateImage;
+- (void)_invalidateImageView;
 
 @end
 
@@ -27,23 +39,32 @@
 
 - (id)image;
 - (PHASset *)photo;
--(void)setFullSizeImage:(id)arg1 ;
+- (void)setFullSizeImage:(id)arg1 ;
 
 @end
 
 %hook PUImageTileViewController
 
-- (id) image {
-	PHASset *imageAsset = [self asset];
-	if ([imageAsset respondsToSelector:@selector(uniformTypeIdentifier)]) {
+- (PHASset *)asset {
+	PHASset *imageAsset = %orig;
+	//First, let's check if it's a picture displayed, or a thumbnail.
+	id layoutInfo = self.layoutInfo;
+	BOOL isMainPic = [layoutInfo isKindOfClass:NSClassFromString(@"PUParallaxedTileLayoutInfo")]; //This is the picture displayed class.
+	if ([imageAsset respondsToSelector:@selector(uniformTypeIdentifier)] && isMainPic) { //uniformTypeIdentifier applies only for photo assets, if this code runs for a video, the app will crash.
 		NSString *typeID = imageAsset.uniformTypeIdentifier;
-		if ([typeID isEqualToString:@"com.compuserve.gif"]) {
+		if ([typeID isEqualToString:@"com.compuserve.gif"]) { //If it's a GIF.
 			NSURL *fURL = [imageAsset mainFileURL];
-			UIImage* mygif = [UIImage animatedImageWithAnimatedGIFURL:fURL];
-			return mygif;
+			dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{ //Runs asynchronously, to avoid lag.
+				UIImage *myGIF = [UIImage animatedImageWithAnimatedGIFURL:fURL]; //The category class imported
+    		dispatch_async(dispatch_get_main_queue(), ^(void){ //UI Updates on the main thread.
+					[self setImage:myGIF];
+					self._imageView.image = myGIF;
+				});
+			});
 		}
 	}
-	return %orig;
+	return imageAsset;
+
 }
 
 %end
